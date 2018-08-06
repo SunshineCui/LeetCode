@@ -55,6 +55,7 @@ public class LeetCode_18_8_2 {
 
     /**
      * 2. 两数相加
+     *https://leetcode-cn.com/problems/add-two-numbers/solution/
      */
     public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
         ListNode listNode = null;
@@ -66,6 +67,10 @@ public class LeetCode_18_8_2 {
                 i += advance;
                 advance = 0;
             }
+        /**      可优化:
+        * carry = sum / 10;
+        * curr.next = new ListNode(sum % 10);
+        */
             if (i > 9) {
                 advance = 1;
                 i -= 10;
@@ -85,4 +90,7 @@ public class LeetCode_18_8_2 {
         }
         return listNode;
     }
+
+
+
 }
