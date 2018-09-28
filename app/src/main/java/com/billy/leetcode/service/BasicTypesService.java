@@ -18,9 +18,10 @@ public class BasicTypesService extends Service{
     @Override
     public IBinder onBind(Intent intent) {
         return new IMyAidlInterface.Stub() {
-            @Override
-            public void basicTypes(int anInt, long aLong, boolean aBoolean, float aFloat, double aDouble, String aString) throws RemoteException {
 
+            @Override
+            public String getName() throws RemoteException {
+                return "hello world!";
             }
         };
     }
