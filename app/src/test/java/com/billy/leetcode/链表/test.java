@@ -1,5 +1,6 @@
 package com.billy.leetcode.链表;
 
+import android.support.annotation.NonNull;
 import android.util.SparseArray;
 
 import com.billy.leetcode.B;
@@ -306,24 +307,84 @@ public class test {
      * @return
      */
     public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
-        if (l1 == null) return l2;
-        if (l2 == null) return l1;
-
         ListNode listNode = new ListNode(0);
         ListNode cur = listNode;
         int mod = 0;
-        while(l1!=null && l2!=null){
-            int i = (l1.val + l2.val+mod) / 10;
-            mod = (l1.val + l2.val+mod) % 10;
+        while(l1!=null || l2!=null){
+            if (l1==null)l1 = new ListNode(0);
+            if (l2 == null)l2 = new ListNode(0);
+            int i = (l1.val + l2.val+mod) % 10;
+            mod = (l1.val + l2.val+mod) / 10;
             l1 = l1.next;
             l2 = l2.next;
             cur.next = new ListNode(i);
             cur = cur.next;
         }
-        cur.next = l1==null?l2:l1;
+        if (mod > 0)
+            cur.next = new ListNode(mod);
         return listNode.next;
     }
 
+    class Node {
+        public int val;
+        public Node prev;
+        public Node next;
+        public Node child;
+
+        public Node() {}
+
+        public Node(int _val,Node _prev,Node _next,Node _child) {
+            val = _val;
+            prev = _prev;
+            next = _next;
+            child = _child;
+        }
+    }
+
+    /**
+     *  扁平化多级双向链表
+     * @param head
+     * @return
+     *
+     * Node cur = head;
+     *     while (cur != null) {
+     *         if (cur.child != null) {
+     *             Node next = cur.next;
+     *             Node child = flatten(cur.child);
+     *             cur.child = null;
+     *             cur.next = child;
+     *             child.prev = cur;
+     *             Node tail = child;
+     *             while (tail.next != null) tail = tail.next;
+     *             tail.next = next;
+     *             if (next != null) next.prev = tail;
+     *             cur = next;
+     *         } else cur = cur.next;
+     *     }
+     *     return head;
+     */
+    public Node flatten(Node head) {
+        Node result = head;
+        if (head!=null)
+        nextNode(head);
+        return result;
+    }
+
+    private Node nextNode(Node head) {
+        if (head.child == null){
+            if (head.next == null)return head;
+            return nextNode(head.next);
+        }
+        Node next = head.next;
+        head.next = head.child;
+        head.child.prev = head;
+        head.child = null;
+        Node node = nextNode(head.next);
+        if (next==null)return node;
+        node.next = next;
+        next.prev = node;
+        return nextNode(next);
+    }
 
     @Test
     public void main() {
