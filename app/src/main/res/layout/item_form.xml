@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="model"
+            type="com.billy.leetcode.form.model.FormModel" />
+    </data>
+
+    <com.google.android.flexbox.FlexboxLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/form_bg"
+        app:flexWrap="nowrap">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@{model.name}"
+            android:padding="10dp"/>
+
+
+        <android.support.v7.widget.RecyclerView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/form_bg"
+            app:formAdapter="@{model.list}"
+            app:layout_flexGrow="1">
+
+        </android.support.v7.widget.RecyclerView>
+
+
+    </com.google.android.flexbox.FlexboxLayout>
+</layout>

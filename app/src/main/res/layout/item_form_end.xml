@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="model"
+            type="com.billy.leetcode.form.model.FormModel" />
+
+    </data>
+
+    <com.google.android.flexbox.FlexboxLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:flexWrap="nowrap"
+        android:background="@drawable/form_bg"
+        >
+
+        <TextView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:text="结尾"
+            android:gravity="center"
+            />
+
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@mipmap/ic_launcher"
+            />
+
+
+    </com.google.android.flexbox.FlexboxLayout>
+</layout>
