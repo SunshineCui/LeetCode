@@ -220,9 +220,10 @@ public class test {
     }
 
     @Test
-    public void mainB (){
+    public void mainB() {
         new B();
     }
+
     /**
      * 回文链表
      *
@@ -310,11 +311,11 @@ public class test {
         ListNode listNode = new ListNode(0);
         ListNode cur = listNode;
         int mod = 0;
-        while(l1!=null || l2!=null){
-            if (l1==null)l1 = new ListNode(0);
-            if (l2 == null)l2 = new ListNode(0);
-            int i = (l1.val + l2.val+mod) % 10;
-            mod = (l1.val + l2.val+mod) / 10;
+        while (l1 != null || l2 != null) {
+            if (l1 == null) l1 = new ListNode(0);
+            if (l2 == null) l2 = new ListNode(0);
+            int i = (l1.val + l2.val + mod) % 10;
+            mod = (l1.val + l2.val + mod) / 10;
             l1 = l1.next;
             l2 = l2.next;
             cur.next = new ListNode(i);
@@ -331,9 +332,10 @@ public class test {
         public Node next;
         public Node child;
 
-        public Node() {}
+        public Node() {
+        }
 
-        public Node(int _val,Node _prev,Node _next,Node _child) {
+        public Node(int _val, Node _prev, Node _next, Node _child) {
             val = _val;
             prev = _prev;
             next = _next;
@@ -342,37 +344,36 @@ public class test {
     }
 
     /**
-     *  扁平化多级双向链表
-     * @param head
-     * @return
+     * 扁平化多级双向链表
      *
-     * Node cur = head;
-     *     while (cur != null) {
-     *         if (cur.child != null) {
-     *             Node next = cur.next;
-     *             Node child = flatten(cur.child);
-     *             cur.child = null;
-     *             cur.next = child;
-     *             child.prev = cur;
-     *             Node tail = child;
-     *             while (tail.next != null) tail = tail.next;
-     *             tail.next = next;
-     *             if (next != null) next.prev = tail;
-     *             cur = next;
-     *         } else cur = cur.next;
-     *     }
-     *     return head;
+     * @param head
+     * @return Node cur = head;
+     * while (cur != null) {
+     * if (cur.child != null) {
+     * Node next = cur.next;
+     * Node child = flatten(cur.child);
+     * cur.child = null;
+     * cur.next = child;
+     * child.prev = cur;
+     * Node tail = child;
+     * while (tail.next != null) tail = tail.next;
+     * tail.next = next;
+     * if (next != null) next.prev = tail;
+     * cur = next;
+     * } else cur = cur.next;
+     * }
+     * return head;
      */
     public Node flatten(Node head) {
         Node result = head;
-        if (head!=null)
-        nextNode(head);
+        if (head != null)
+            nextNode(head);
         return result;
     }
 
     private Node nextNode(Node head) {
-        if (head.child == null){
-            if (head.next == null)return head;
+        if (head.child == null) {
+            if (head.next == null) return head;
             return nextNode(head.next);
         }
         Node next = head.next;
@@ -380,12 +381,23 @@ public class test {
         head.child.prev = head;
         head.child = null;
         Node node = nextNode(head.next);
-        if (next==null)return node;
+        if (next == null) return node;
         node.next = next;
         next.prev = node;
         return nextNode(next);
     }
 
+
+    /**
+     * 旋转链表
+     *
+     * @param head
+     * @param k
+     * @return
+     */
+//    public ListNode rotateRight(ListNode head, int k) {
+//
+//    }
     @Test
     public void main() {
 
@@ -416,5 +428,29 @@ public class test {
 //        System.out.println(hasCycle(listNode));
 
 //        getIntersectionNode(new ListNode(1), new ListNode(2));
+    }
+
+    @Test
+    public void test(){
+        int solution = solution(32);
+        System.out.println(solution);
+    }
+    public int solution(int N) {
+        int max = 0,count = -1;
+        while (N > 0) {
+            int remainder = N % 2;
+            if (remainder == 1 ) {
+                if (count > 0){
+                    max = Math.max(count, max);
+                    count = 0;
+                }else {
+                    count = 0;
+                }
+            } else {
+                if (count > -1) count++;
+            }
+            N = N / 2;
+        }
+        return max;
     }
 }
