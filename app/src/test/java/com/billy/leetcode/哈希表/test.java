@@ -6,10 +6,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.PriorityQueue;
 import java.util.Set;
 
 /**
@@ -479,4 +481,92 @@ public class test {
         }
         return count;
     }
+
+
+    /**
+     * 前 K 个高频元素    ,用到了 PriorityQueue
+     * @param nums
+     * @param k 出现频率前 k 高
+     * @return
+     */
+    public List<Integer> topKFrequent(int[] nums, int k) {
+        final Map<Integer,Integer> map = new HashMap<>();
+        for (int i = 0; i < nums.length; i++) {
+            int num = nums[i];
+            if (map.containsKey(num)){
+                map.put(num,map.get(num)+1);
+            }else {
+                map.put(num,1);
+            }
+        }
+
+        PriorityQueue<Integer> pq = new PriorityQueue<>(new Comparator<Integer>() {
+            @Override
+            public int compare(Integer o1, Integer o2) {
+                return map.get(o1)-map.get(o2);
+            }
+        });
+
+        for (Integer key : map.keySet()) {
+            if (pq.size() < k){
+                pq.add(key);
+            }else if (map.get(key)>map.get(pq.peek())){
+                pq.remove();
+                pq.add(key);
+            }
+        }
+        List<Integer> res = new ArrayList<>();
+        while (!pq.isEmpty()){
+            res.add(pq.remove());
+        }
+        return res;
+    }
+
+
+    /**
+     * 二分查找
+     * @param nums
+     * @param target
+     * @return
+     */
+    public int search(int[] nums, int target) {
+        int end = nums.length-1;
+        int start = 0;
+        while(start <= end){
+            int mid = (end+start)/2;
+            if (nums[mid] == target){
+                return mid;
+            }else if (nums[mid] > target){
+                end = mid-1;
+            }else {
+                start = mid+1;
+            }
+        }
+        return -1;
+    }
+
+
+    /**
+     * x 的平方根
+     * @param x
+     * @return
+     */
+    public int mySqrt(int x) {
+        if (x==0)return 0;
+        long start = 0;
+        long end = x/2;
+        while (start < end){
+            long mid = (start + end +1) >> 1;
+            long i = mid * mid;
+            if (i == x){
+                return (int) mid;
+            }else if (i<x){
+                start = mid;
+            }else {
+                end = mid -1;
+            }
+        }
+        return (int) start;
+    }
+
 }
